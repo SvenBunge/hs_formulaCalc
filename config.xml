@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <modules>
+        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.1">
+            <inputs>
+                <input type="string" const_name="formula" init_value="">Formel</input>
+                <input type="number" const_name="X1" init_value="0">Wert für x1</input>
+                <input type="number" const_name="X2" init_value="0">Wert für x2</input>
+                <input type="number" const_name="X3" init_value="0">Wert für x3</input>
+                <input type="number" const_name="X4" init_value="0">Wert für x4</input>
+                <input type="number" const_name="X5" init_value="0">Wert für x5</input>
+                <input type="number" const_name="X6" init_value="0">Wert für x6</input>
+                <input type="number" const_name="X7" init_value="0">Wert für x7</input>
+                <input type="number" const_name="X8" init_value="0">Wert für x8</input>
+            </inputs>
+            <outputs>
+                <output type="number" const_name="formula_output" init_value="0">Wert der Formel (sbc)</output>
+                <output type="number" const_name="error" init_value="0">Fehler-Indikator</output>
+                <output type="string" const_name="debug" init_value="0">Debug Text</output>
+            </outputs>
+            <remanent_variables />
+            <imports>
+            </imports>
+        </module>
+    </modules>
+    <logging type="None" ip="" port="" />
+</config>
