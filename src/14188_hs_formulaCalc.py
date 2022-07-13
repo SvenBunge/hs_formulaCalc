@@ -34,7 +34,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict = {}
 
     def on_init(self):
-        # prepare call env (importlib not supported by HS 4.11)
+        # prepare call env (importlib not supported by HS 4.11, but this works well)
         self.method_dict["sqrt"] = getattr(math, "sqrt")
         self.method_dict["pow"] = getattr(math, "pow")
         self.method_dict["ceil"] = getattr(math, "ceil")
@@ -52,17 +52,18 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict["radians"] = getattr(math, "radians")
         self.method_dict["pi"] = getattr(math, "pi")
         self.method_dict["e"] = getattr(math, "e")
+        # run the calc once after start
         self.calculate_formula()
 
     def on_input_value(self, index, value):
-        self.calculate_formula()
+        self.calculate_formula()  # run calc on every update
 
     def calculate_formula(self):
         formula, x1, x2, x3, x4, x5, x6, x7, x8 = self.get_inputs()
         formula = self.add_security(formula)
         try:
             value_dict = {"x1": x1, "x2": x2, "x3": x3, "x4": x4, "x5": x5, "x6": x6, "x7": x7, "x8": x8}
-            value_dict.update(self.method_dict)
+            value_dict.update(self.method_dict)  # Merge methods and vars into eval env
             result = eval(formula, value_dict)
             if result != self.last_value:  # sbc
                 self._set_output_value(self.PIN_O_FORMULA_OUTPUT, result)
@@ -71,7 +72,6 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
             self._set_output_value(self.PIN_O_DEBUG, "")
         except (SyntaxError, NameError, TypeError, ZeroDivisionError) as err:
             self._set_output_value(self.PIN_O_DEBUG, err)
-            self._set_output_value(self.PIN_O_ERROR, 1)
             self._set_output_value(self.PIN_O_ERROR, 1)
 
     def get_inputs(self):
@@ -103,4 +103,3 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         formula = formula.replace("lambda", "")
         formula = formula.replace("repr", "")
         return formula
-
