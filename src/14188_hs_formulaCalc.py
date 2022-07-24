@@ -91,7 +91,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
             value_dict.update(self.create_result_dict())  # Update y values from calculations
             if formula_2:
                 result = eval(formula_2, value_dict)
-                if result != self.last_value_y1:  # sbc
+                if result != self.last_value_y2:  # sbc
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2, result)
                     self.last_value_y2 = result
 
