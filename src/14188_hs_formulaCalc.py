@@ -60,6 +60,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict["radians"] = getattr(math, "radians")
         self.method_dict["pi"] = getattr(math, "pi")
         self.method_dict["e"] = getattr(math, "e")
+        self.method_dict["__builtins__"] = {}  # For security reasons remove builtins-methods
         # run the calc once after start
         self.calculate_formula()
 
@@ -68,29 +69,28 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
 
     def calculate_formula(self):
         x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, formula_0, formula_1, formula_2 = self.get_inputs()
-        formula_0 = self.add_security(formula_0)
-        formula_1 = self.add_security(formula_1)
-        formula_2 = self.add_security(formula_2)
+        value_dict = {"x0": x0, "x1": x1, "x2": x2, "x3": x3, "x4": x4, "x5": x5, "x6": x6, "x7": x7, "x8": x8, "x9": x9}
         try:
-            value_dict = {"x0": x0, "x1": x1, "x2": x2, "x3": x3, "x4": x4, "x5": x5, "x6": x6, "x7": x7, "x8": x8, "x9": x9}
-            value_dict.update(self.create_result_dict())
-            value_dict.update(self.method_dict)  # Merge methods and vars into eval env
             if formula_0:
-                result = eval(formula_0, value_dict)
+                value_dict.update(self.create_result_dict())
+                formula_0 = self.add_security(formula_0)
+                result = eval(formula_0, self.method_dict, value_dict)
                 if result != self.last_value_y0:  # sbc
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0, result)
                     self.last_value_y0 = result
 
-            value_dict.update(self.create_result_dict())  # Update y values from calculations
             if formula_1:
-                result = eval(formula_1, value_dict)
+                value_dict.update(self.create_result_dict())  # Update y values from calculations
+                formula_1 = self.add_security(formula_1)
+                result = eval(formula_1, self.method_dict, value_dict)
                 if result != self.last_value_y1:  # sbc
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1, result)
                     self.last_value_y1 = result
 
-            value_dict.update(self.create_result_dict())  # Update y values from calculations
             if formula_2:
-                result = eval(formula_2, value_dict)
+                value_dict.update(self.create_result_dict())  # Update y values from calculations
+                formula_2 = self.add_security(formula_2)
+                result = eval(formula_2, self.method_dict, value_dict)
                 if result != self.last_value_y2:  # sbc
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2, result)
                     self.last_value_y2 = result
@@ -98,20 +98,20 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
             self._set_output_value(self.PIN_O_ERROR, 0)
             self._set_output_value(self.PIN_O_DEBUG, "")
         except (SyntaxError, NameError, TypeError, ZeroDivisionError) as err:
-            self._set_output_value(self.PIN_O_DEBUG, err)
             self._set_output_value(self.PIN_O_ERROR, 1)
+            self._set_output_value(self.PIN_O_DEBUG, err)
 
     def get_inputs(self):
-        x0 = int(self._get_input_value(self.PIN_I_X0))
-        x1 = int(self._get_input_value(self.PIN_I_X1))
-        x2 = int(self._get_input_value(self.PIN_I_X2))
-        x3 = int(self._get_input_value(self.PIN_I_X3))
-        x4 = int(self._get_input_value(self.PIN_I_X4))
-        x5 = int(self._get_input_value(self.PIN_I_X5))
-        x6 = int(self._get_input_value(self.PIN_I_X6))
-        x7 = int(self._get_input_value(self.PIN_I_X7))
-        x8 = int(self._get_input_value(self.PIN_I_X8))
-        x9 = int(self._get_input_value(self.PIN_I_X9))
+        x0 = self._get_input_value(self.PIN_I_X0)
+        x1 = self._get_input_value(self.PIN_I_X1)
+        x2 = self._get_input_value(self.PIN_I_X2)
+        x3 = self._get_input_value(self.PIN_I_X3)
+        x4 = self._get_input_value(self.PIN_I_X4)
+        x5 = self._get_input_value(self.PIN_I_X5)
+        x6 = self._get_input_value(self.PIN_I_X6)
+        x7 = self._get_input_value(self.PIN_I_X7)
+        x8 = self._get_input_value(self.PIN_I_X8)
+        x9 = self._get_input_value(self.PIN_I_X9)
         formula_0 = self._get_input_value(self.PIN_I_FORMULA_0)
         formula_1 = self._get_input_value(self.PIN_I_FORMULA_1)
         formula_2 = self._get_input_value(self.PIN_I_FORMULA_2)
@@ -128,6 +128,10 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         formula = formula.replace("__", "")
         formula = formula.replace("{", "")
         formula = formula.replace("}", "")
+        formula = formula.replace("[", "")
+        formula = formula.replace("]", "")
+        formula = formula.replace("\"", "")
+        formula = formula.replace("'", "")
         formula = formula.replace("env", "")
         formula = formula.replace("ast", "")
         formula = formula.replace("()", "")
