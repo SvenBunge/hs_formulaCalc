@@ -1,5 +1,6 @@
 # coding: utf-8
 import math
+import time
 
 ##!!!!##################################################################################################
 #### Own written code can be placed above this commentblock . Do not change or delete commentblock! ####
@@ -42,6 +43,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict = {}
 
     def on_init(self):
+        time.sleep(1)  # Avoid race condition: Sometimes HS is calling on init to early before all vars are init.
         # prepare call env (importlib not supported by HS 4.11, but this works well)
         self.method_dict["sqrt"] = getattr(math, "sqrt")
         self.method_dict["pow"] = getattr(math, "pow")
