@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <modules>
-        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.4">
+        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.5">
             <inputs>
                 <input type="number" const_name="X0" init_value="0">Wert für x0</input>
                 <input type="number" const_name="X1" init_value="0">Wert für x1</input>
@@ -16,6 +16,7 @@
                 <input type="string" const_name="formula_0" init_value="">Formel y0 / A1</input>
                 <input type="string" const_name="formula_1" init_value="">Formel y1 / A2</input>
                 <input type="string" const_name="formula_2" init_value="">Formel y2 / A3</input>
+                <input type="number" const_name="calc_on_init" init_value="1">Neuberechnung bei Start</input>
             </inputs>
             <outputs>
                 <output type="number" const_name="formula_output_y0" init_value="0">Wert der Formel A1 als y0 (sbc)</output>

@@ -26,6 +26,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.PIN_I_FORMULA_0=11
         self.PIN_I_FORMULA_1=12
         self.PIN_I_FORMULA_2=13
+        self.PIN_I_CALC_ON_INIT=14
         self.PIN_O_FORMULA_OUTPUT_Y0=1
         self.PIN_O_FORMULA_OUTPUT_Y1=2
         self.PIN_O_FORMULA_OUTPUT_Y2=3
@@ -49,6 +50,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict["pow"] = getattr(math, "pow")
         self.method_dict["ceil"] = getattr(math, "ceil")
         self.method_dict["floor"] = getattr(math, "floor")
+        self.method_dict["round"] = getattr(math, "round")
         self.method_dict["trunc"] = getattr(math, "trunc")
         self.method_dict["exp"] = getattr(math, "exp")
         self.method_dict["log"] = getattr(math, "log")
@@ -64,10 +66,11 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict["e"] = getattr(math, "e")
         self.method_dict["__builtins__"] = {}  # For security reasons remove builtins-methods
         # run the calc once after start
-        self.calculate_formula()
+        if bool(self._get_input_value(self.PIN_I_CALC_ON_INIT)):
+            self.calculate_formula()
 
     def on_input_value(self, index, value):
-        self.calculate_formula()  # run calc on every update
+        self.calculate_formula()
 
     def calculate_formula(self):
         x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, formula_0, formula_1, formula_2 = self.get_inputs()
