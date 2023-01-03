@@ -1,6 +1,7 @@
 # coding: utf-8
 import math
 import time
+import __builtin__ as builtins
 
 ##!!!!##################################################################################################
 #### Own written code can be placed above this commentblock . Do not change or delete commentblock! ####
@@ -45,13 +46,17 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
 
     def on_init(self):
         time.sleep(1)  # Avoid race condition: Sometimes HS is calling on init to early before all vars are init.
+
+        # For security reasons remove builtins-methods
+        self.method_dict["__builtins__"] = {}
         # prepare call env (importlib not supported by HS 4.11, but this works well)
         self.method_dict["sqrt"] = getattr(math, "sqrt")
         self.method_dict["pow"] = getattr(math, "pow")
         self.method_dict["ceil"] = getattr(math, "ceil")
         self.method_dict["floor"] = getattr(math, "floor")
-        self.method_dict["round"] = getattr(math, "round")
+        self.method_dict["round"] = getattr(builtins, "round")
         self.method_dict["trunc"] = getattr(math, "trunc")
+        self.method_dict["abs"] = getattr(builtins, "abs")
         self.method_dict["exp"] = getattr(math, "exp")
         self.method_dict["log"] = getattr(math, "log")
         self.method_dict["sin"] = getattr(math, "sin")
@@ -64,7 +69,6 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict["radians"] = getattr(math, "radians")
         self.method_dict["pi"] = getattr(math, "pi")
         self.method_dict["e"] = getattr(math, "e")
-        self.method_dict["__builtins__"] = {}  # For security reasons remove builtins-methods
         # run the calc once after start
         if bool(self._get_input_value(self.PIN_I_CALC_ON_INIT)):
             self.calculate_formula()
