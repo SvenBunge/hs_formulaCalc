@@ -28,6 +28,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.PIN_I_FORMULA_1=12
         self.PIN_I_FORMULA_2=13
         self.PIN_I_CALC_ON_INIT=14
+        self.PIN_I_SBC_OUTPUTS=15
         self.PIN_O_FORMULA_OUTPUT_Y0=1
         self.PIN_O_FORMULA_OUTPUT_Y1=2
         self.PIN_O_FORMULA_OUTPUT_Y2=3
@@ -79,12 +80,14 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
     def calculate_formula(self):
         x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, formula_0, formula_1, formula_2 = self.get_inputs()
         value_dict = {"x0": x0, "x1": x1, "x2": x2, "x3": x3, "x4": x4, "x5": x5, "x6": x6, "x7": x7, "x8": x8, "x9": x9}
+        sbc_outputs = bool(self._get_input_value(self.PIN_I_SBC_OUTPUTS))
+
         try:
             if formula_0:
                 value_dict.update(self.create_result_dict())
                 formula_0 = self.add_security(formula_0)
                 result = eval(formula_0, self.method_dict, value_dict)
-                if result != self.last_value_y0:  # sbc
+                if not (sbc_outputs and result == self.last_value_y0):  # sbc check
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0, result)
                     self.last_value_y0 = result
 
@@ -92,7 +95,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
                 value_dict.update(self.create_result_dict())  # Update y values from calculations
                 formula_1 = self.add_security(formula_1)
                 result = eval(formula_1, self.method_dict, value_dict)
-                if result != self.last_value_y1:  # sbc
+                if not (sbc_outputs and result == self.last_value_y1):  # sbc check
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1, result)
                     self.last_value_y1 = result
 
@@ -100,7 +103,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
                 value_dict.update(self.create_result_dict())  # Update y values from calculations
                 formula_2 = self.add_security(formula_2)
                 result = eval(formula_2, self.method_dict, value_dict)
-                if result != self.last_value_y2:  # sbc
+                if not (sbc_outputs and result == self.last_value_y2):  # sbc check
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2, result)
                     self.last_value_y2 = result
 
