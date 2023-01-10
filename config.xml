@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <modules>
-        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.6">
+        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.6.1">
             <inputs>
                 <input type="number" const_name="X0" init_value="0">Wert für x0</input>
                 <input type="number" const_name="X1" init_value="0">Wert für x1</input>
@@ -17,12 +17,14 @@
                 <input type="string" const_name="formula_1" init_value="">Formel y1 / A2</input>
                 <input type="string" const_name="formula_2" init_value="">Formel y2 / A3</input>
                 <input type="number" const_name="calc_on_init" init_value="1">Neuberechnung bei Start</input>
-                <input type="number" const_name="sbc_outputs" init_value="1">Alle Outputs sind SBC</input>
             </inputs>
             <outputs>
-                <output type="number" const_name="formula_output_y0" init_value="0">Wert der Formel A1 als y0 (sbc)</output>
-                <output type="number" const_name="formula_output_y1" init_value="0">Wert der Formel A2 als y1 (sbc)</output>
-                <output type="number" const_name="formula_output_y2" init_value="0">Wert der Formel A3 als y2 (sbc)</output>
+                <output type="number" const_name="formula_output_y0_sbc" init_value="0">Wert der Formel A1 als y0 (sbc)</output>
+                <output type="number" const_name="formula_output_y1_sbc" init_value="0">Wert der Formel A2 als y1 (sbc)</output>
+                <output type="number" const_name="formula_output_y2_sbc" init_value="0">Wert der Formel A3 als y2 (sbc)</output>
+                <output type="number" const_name="formula_output_y0" init_value="0">Wert der Formel A1 als y0</output>
+                <output type="number" const_name="formula_output_y1" init_value="0">Wert der Formel A2 als y1</output>
+                <output type="number" const_name="formula_output_y2" init_value="0">Wert der Formel A3 als y2</output>
                 <output type="number" const_name="error" init_value="0">Fehler-Indikator</output>
                 <output type="string" const_name="debug" init_value="0">Debug Text</output>
             </outputs>
