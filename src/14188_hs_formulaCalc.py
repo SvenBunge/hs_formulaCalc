@@ -88,34 +88,39 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
                 value_dict.update(self.create_result_dict())
                 formula_0 = self.add_security(formula_0)
                 result = eval(formula_0, self.method_dict, value_dict)
-                self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0, result)
-                if result != self.last_value_y0:  # sbc check
-                    self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0_SBC, result)
-                    self.last_value_y0 = result
+                if  self._can_set_output():
+                    self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0, result)
+                    if result != self.last_value_y0:  # sbc check
+                        self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0_SBC, result)
+                        self.last_value_y0 = result
 
             if formula_1:
                 value_dict.update(self.create_result_dict())  # Update y values from calculations
                 formula_1 = self.add_security(formula_1)
                 result = eval(formula_1, self.method_dict, value_dict)
-                self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1, result)
-                if result != self.last_value_y1:  # sbc check
-                    self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1_SBC, result)
-                    self.last_value_y1 = result
+                if self._can_set_output():
+                    self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1, result)
+                    if result != self.last_value_y1:  # sbc check
+                        self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1_SBC, result)
+                        self.last_value_y1 = result
 
             if formula_2:
                 value_dict.update(self.create_result_dict())  # Update y values from calculations
                 formula_2 = self.add_security(formula_2)
                 result = eval(formula_2, self.method_dict, value_dict)
-                self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2, result)
-                if result != self.last_value_y2:  # sbc check
-                    self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2_SBC, result)
-                    self.last_value_y2 = result
+                if self._can_set_output():
+                    self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2, result)
+                    if result != self.last_value_y2:  # sbc check
+                        self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2_SBC, result)
+                        self.last_value_y2 = result
 
-            self._set_output_value(self.PIN_O_ERROR, 0)
-            self._set_output_value(self.PIN_O_DEBUG, "")
+            if self._can_set_output():
+                self._set_output_value(self.PIN_O_ERROR, 0)
+                self._set_output_value(self.PIN_O_DEBUG, "")
         except (SyntaxError, NameError, TypeError, ZeroDivisionError) as err:
-            self._set_output_value(self.PIN_O_ERROR, 1)
-            self._set_output_value(self.PIN_O_DEBUG, err)
+            if self._can_set_output():
+                self._set_output_value(self.PIN_O_ERROR, 1)
+                self._set_output_value(self.PIN_O_DEBUG, err)
 
     def get_inputs(self):
         x0 = self._get_input_value(self.PIN_I_X0)
