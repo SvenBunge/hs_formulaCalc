@@ -53,8 +53,8 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         # For security reasons remove builtins-methods
         self.method_dict["__builtins__"] = {}
         # prepare call env (importlib not supported by HS 4.11, but this works well)
-        self.method_dict["sqrt"] = getattr(math, "sqrt")
         self.method_dict["pow"] = getattr(math, "pow")
+        self.method_dict["sqrt"] = getattr(math, "sqrt")
         self.method_dict["ceil"] = getattr(math, "ceil")
         self.method_dict["floor"] = getattr(math, "floor")
         self.method_dict["round"] = getattr(builtins, "round")
@@ -72,6 +72,9 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict["radians"] = getattr(math, "radians")
         self.method_dict["pi"] = getattr(math, "pi")
         self.method_dict["e"] = getattr(math, "e")
+        self.method_dict["min"] = getattr(builtins, "min")
+        self.method_dict["max"] = getattr(builtins, "max")
+        self.method_dict["bool"] = getattr(builtins, "bool")
         # run the calc once after start
         if bool(self._get_input_value(self.PIN_I_CALC_ON_INIT)):
             self.calculate_formula()
@@ -87,7 +90,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
             if formula_0:
                 value_dict.update(self.create_result_dict())
                 formula_0 = self.add_security(formula_0)
-                result = eval(formula_0, self.method_dict, value_dict)
+                result = eval(formula_0.lower(), self.method_dict, value_dict)
                 if  self._can_set_output():
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y0, result)
                     if result != self.last_value_y0:  # sbc check
@@ -97,7 +100,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
             if formula_1:
                 value_dict.update(self.create_result_dict())  # Update y values from calculations
                 formula_1 = self.add_security(formula_1)
-                result = eval(formula_1, self.method_dict, value_dict)
+                result = eval(formula_1.lower(), self.method_dict, value_dict)
                 if self._can_set_output():
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y1, result)
                     if result != self.last_value_y1:  # sbc check
@@ -107,7 +110,7 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
             if formula_2:
                 value_dict.update(self.create_result_dict())  # Update y values from calculations
                 formula_2 = self.add_security(formula_2)
-                result = eval(formula_2, self.method_dict, value_dict)
+                result = eval(formula_2.lower(), self.method_dict, value_dict)
                 if self._can_set_output():
                     self._set_output_value(self.PIN_O_FORMULA_OUTPUT_Y2, result)
                     if result != self.last_value_y2:  # sbc check

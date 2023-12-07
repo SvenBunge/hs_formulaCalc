@@ -1,11 +1,11 @@
 # HomeServer Formula Calculator (14188)
 
-Module / LBS for the Gira HomeServer - tested with 4.11
+Module / LBS for the Gira HomeServer - tested with 4.12
 Express your calculation easy with a simple formula. Use math functions and simple logik to express yourself in one module / LBS.
 
 ## Developer Notes
 
-Developed for the GIRA HomeServer 4.11 (Could work >4.7)
+Developed for the GIRA HomeServer 4.12 (Could work >4.7)
 Licensed under the LGPL to keep all copies & forks free!
 
 :exclamation: **If you fork this project and distribute the module by your own CHANGE the Logikbaustein-ID because 14188 is only for this one and registered to @SvenBunge !!** :exclamation:

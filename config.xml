@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <modules>
-        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.7">
+        <module category="Math. Funktionen" context="hs_formulaCalc14188" id="14188" name="hs_formulaCalc" internal_name="hs_formulaCalc" external_name="Formula Calculator (14188)" version="0.8">
             <inputs>
                 <input type="number" const_name="X0" init_value="0">Wert für x0</input>
                 <input type="number" const_name="X1" init_value="0">Wert für x1</input>
