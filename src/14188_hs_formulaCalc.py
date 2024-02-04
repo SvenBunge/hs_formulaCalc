@@ -1,6 +1,5 @@
 # coding: utf-8
 import math
-import time
 import __builtin__ as builtins
 
 ##!!!!##################################################################################################
@@ -8,12 +7,12 @@ import __builtin__ as builtins
 ########################################################################################################
 ##** Code created by generator - DO NOT CHANGE! **##
 
-class Hs_formulaCalc14188(hsl20_3.BaseModule):
+class Hs_formulaCalc14188(hsl20_4.BaseModule):
 
     def __init__(self, homeserver_context):
-        hsl20_3.BaseModule.__init__(self, homeserver_context, "hs_formulaCalc14188")
+        hsl20_4.BaseModule.__init__(self, homeserver_context, "hs_formulaCalc14188")
         self.FRAMEWORK = self._get_framework()
-        self.LOGGER = self._get_logger(hsl20_3.LOGGING_NONE,())
+        self.LOGGER = self._get_logger(hsl20_4.LOGGING_NONE,())
         self.PIN_I_X0=1
         self.PIN_I_X1=2
         self.PIN_I_X2=3
@@ -36,7 +35,6 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.PIN_O_FORMULA_OUTPUT_Y2=6
         self.PIN_O_ERROR=7
         self.PIN_O_DEBUG=8
-        self.FRAMEWORK._run_in_context_thread(self.on_init)
 
 ########################################################################################################
 #### Own written code can be placed after this commentblock . Do not change or delete commentblock! ####
@@ -48,8 +46,6 @@ class Hs_formulaCalc14188(hsl20_3.BaseModule):
         self.method_dict = {}
 
     def on_init(self):
-        time.sleep(1)  # Avoid race condition: Sometimes HS is calling on init to early before all vars are init.
-
         # For security reasons remove builtins-methods
         self.method_dict["__builtins__"] = {}
         # prepare call env (importlib not supported by HS 4.11, but this works well)
